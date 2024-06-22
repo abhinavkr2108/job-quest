@@ -1,7 +1,18 @@
-import { authkitMiddleware } from "@workos-inc/authkit-nextjs";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-export default authkitMiddleware();
+const isPublicRoute = createRouteMatcher([
+  "/sign-in(.*)",
+  "/sign-up(.*)",
+  "/other-jobs(.*)",
+  "/",
+]);
 
-// Match against pages that require authentication
-// Leave this out if you want authentication on every page in your application
-export const config = { matcher: ["/"] };
+export default clerkMiddleware((auth, request) => {
+  if (!isPublicRoute(request)) {
+    auth().protect();
+  }
+});
+
+export const config = {
+  matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
+};

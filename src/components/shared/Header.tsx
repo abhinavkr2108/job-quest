@@ -9,14 +9,16 @@ import {
   NavbarMenuToggle,
 } from "@nextui-org/react";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { ModeToggle } from "./ModeToggle";
 import { Button } from "../ui/button";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const [isActive, setIsActive] = React.useState(false);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = React.useState(0);
+
+  // const router = useRouter();
 
   const menuItems = [
     {
@@ -37,6 +39,10 @@ export default function Header() {
     },
   ];
 
+  useEffect(() => {
+    console.log("activeIndex", activeIndex);
+  }, [activeIndex]);
+
   return (
     <Navbar onMenuOpenChange={setIsMenuOpen} isBordered maxWidth="2xl">
       <NavbarContent>
@@ -53,10 +59,11 @@ export default function Header() {
             {menuItems.map((item, index) => (
               <Link
                 key={`${item}-${index}`}
-                onClickCapture={() => setActiveIndex(index)}
-                className={`${activeIndex === index ? "text-primary" : ""}`}
                 href={item.link}
-                onClick={() => setIsActive(!isActive)}
+                onClick={() => setActiveIndex(index)}
+                className={`cursor-pointer ${
+                  activeIndex === index ? "text-primary" : ""
+                }`}
               >
                 {item.title}
               </Link>
@@ -67,9 +74,15 @@ export default function Header() {
       <NavbarContent justify="end">
         <NavbarItem className="hidden md:flex items-center gap-2">
           <div className="flex items-center gap-2">
-            <Link href={"/"}>
-              <Button color="primary">Login</Button>
-            </Link>
+            <SignedOut>
+              <Link href={"/sign-in"}>
+                <Button color="primary">Login</Button>
+              </Link>
+            </SignedOut>
+            <SignedIn>
+              <UserButton afterSignOutUrl="/" />
+            </SignedIn>
+
             <Link href={"/register"}>
               <Button color="primary" variant={"secondary"}>
                 Post Job

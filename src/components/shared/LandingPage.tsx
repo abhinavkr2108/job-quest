@@ -1,3 +1,10 @@
+import {
+  NoUserInfo,
+  UserInfo,
+} from "@workos-inc/authkit-nextjs/dist/cjs/interfaces";
+import { Button } from "../ui/button";
+import Link from "next/link";
+
 export default function LandingPage() {
   return (
     <section className="h-screen md:h-[60vh] w-full bg-[url('/grid.svg')]">
@@ -17,19 +24,13 @@ export default function LandingPage() {
               Embark on your career journey with Job Quest, the ultimate
               platform connecting job seekers with top employers.
             </p>
-            <div className="items-center justify-center gap-x-3 space-y-3 sm:flex sm:space-y-0">
-              <a
-                href="javascript:void(0)"
-                className="block py-2 px-4 text-white font-medium bg-indigo-600 duration-150 hover:bg-indigo-500 active:bg-indigo-700 rounded-lg shadow-lg hover:shadow-none"
-              >
-                Browse Jobs
-              </a>
-              <a
-                href="javascript:void(0)"
-                className="block py-2 px-4 text-gray-700 hover:text-gray-500 font-medium duration-150 active:bg-gray-100 border rounded-lg"
-              >
-                Know More
-              </a>
+            <div className="w-full flex flex-col items-center justify-center gap-4 md:flex-row">
+              <Link href="/dashboard">
+                <Button className="w-full">Browse Jobs</Button>
+              </Link>
+              <Link href={"/resume-builder"}>
+                <Button variant="secondary">Build Resume</Button>
+              </Link>
             </div>
           </div>
         </div>
