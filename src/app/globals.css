@@ -48,3 +48,11 @@
     --ring: 263.4 70% 50.4%;
   }
 }
+
+.heading {
+  @apply text-xl font-bold text-secondary-foreground md:text-2xl;
+}
+
+.paragraph {
+  @apply text-lg text-secondary-foreground;
+}

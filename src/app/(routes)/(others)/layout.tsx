@@ -9,7 +9,7 @@ export default async function RoutesLayout({
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      {children}
+      <div className="flex-grow p-5">{children}</div>
     </div>
   );
 }

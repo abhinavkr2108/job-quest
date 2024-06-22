@@ -9,14 +9,13 @@ import {
   NavbarMenuToggle,
 } from "@nextui-org/react";
 import Link from "next/link";
-import React, { useCallback, useEffect, useMemo } from "react";
+import React from "react";
 import { ModeToggle } from "./ModeToggle";
 import { Button } from "../ui/button";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const [activeIndex, setActiveIndex] = React.useState(0);
 
   // const router = useRouter();
 
@@ -39,10 +38,6 @@ export default function Header() {
     },
   ];
 
-  useEffect(() => {
-    console.log("activeIndex", activeIndex);
-  }, [activeIndex]);
-
   return (
     <Navbar onMenuOpenChange={setIsMenuOpen} isBordered maxWidth="2xl">
       <NavbarContent>
@@ -57,14 +52,7 @@ export default function Header() {
         <NavbarItem>
           <div className="flex gap-4 font-bold">
             {menuItems.map((item, index) => (
-              <Link
-                key={`${item}-${index}`}
-                href={item.link}
-                onClick={() => setActiveIndex(index)}
-                className={`cursor-pointer ${
-                  activeIndex === index ? "text-primary" : ""
-                }`}
-              >
+              <Link key={`${item}-${index}`} href={item.link}>
                 {item.title}
               </Link>
             ))}
@@ -83,7 +71,7 @@ export default function Header() {
               <UserButton afterSignOutUrl="/" />
             </SignedIn>
 
-            <Link href={"/register"}>
+            <Link href={"/post-job"}>
               <Button color="primary" variant={"secondary"}>
                 Post Job
               </Button>
