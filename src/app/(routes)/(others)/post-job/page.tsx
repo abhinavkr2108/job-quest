@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import React from "react";
 import CreateCompany from "./components/CreateCompany";
-import GetOrganizations from "./components/GetOrganizations";
 import DisplayCompanies from "./components/DisplayCompanies";
 
 export default async function PostJob() {
